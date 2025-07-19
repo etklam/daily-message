@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllConfig, setMultipleConfig } from '@/lib/config';
+import { reloadScheduler } from '@/lib/scheduler';
 
 // GET /api/config - 獲取所有配置
 export async function GET() {
@@ -46,6 +47,9 @@ export async function PUT(request: NextRequest) {
     );
     
     setMultipleConfig(filteredConfig);
+    
+    // 重新載入排程器以應用新配置
+    reloadScheduler();
     
     return NextResponse.json({
       success: true,

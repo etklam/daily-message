@@ -18,7 +18,7 @@ export interface Config {
 // 獲取所有配置
 export function getAllConfig(): Partial<Config> {
   const stmt = db.prepare('SELECT key, value FROM system_config');
-  const rows = stmt.all();
+  const rows = stmt.all() as Array<{ key: string; value: string }>;
   
   const config: Partial<Config> = {};
   rows.forEach(row => {
@@ -31,7 +31,7 @@ export function getAllConfig(): Partial<Config> {
 // 獲取單個配置
 export function getConfig(key: string): string | undefined {
   const stmt = db.prepare('SELECT value FROM system_config WHERE key = ?');
-  const result = stmt.get(key);
+  const result = stmt.get(key) as { value: string } | undefined;
   return result?.value;
 }
 

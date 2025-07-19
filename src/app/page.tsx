@@ -11,10 +11,10 @@ export default function HomePage() {
       color: 'text-blue-500'
     },
     {
-      title: '定時任務',
-      description: '設定每日訊息發送時間和內容',
+      title: '管理排程',
+      description: '管理定時任務和監控執行狀態',
       icon: Clock,
-      href: '/settings/schedule',
+      href: '/manage-schedule',
       color: 'text-green-500'
     },
     {
@@ -60,14 +60,14 @@ export default function HomePage() {
             </div>
           </Link>
 
-          <Link href="/settings/schedule">
+          <Link href="/manage-schedule">
             <div className="bg-white rounded-lg shadow-md border p-6 hover:shadow-lg transition-shadow cursor-pointer">
               <h3 className="text-lg font-semibold flex items-center gap-2">
                 <Clock className="w-5 h-5 text-green-500" />
-                設定排程
+                管理排程
               </h3>
               <p className="text-sm text-gray-700 mt-1">
-                設定每日訊息發送時間
+                管理定時任務和監控執行狀態
               </p>
             </div>
           </Link>
