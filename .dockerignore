@@ -1,0 +1,74 @@
+# 依賴
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+build/
+
+# 測試
+coverage/
+.nyc_output
+
+# 環境變數
+.env*
+!.env.example
+
+# 日誌
+*.log
+logs/
+
+# 運行時數據
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+README*.md
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# 開發工具
+.eslintrc.json
+.prettierrc
+.editorconfig
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# 備份和臨時文件
+*.bak
+*.tmp
+*.temp
+
+# 特定於專案的排除
+data/database.sqlite*
+scripts/test-*.js
+public/*.svg

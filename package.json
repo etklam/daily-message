@@ -12,8 +12,16 @@
     "dev:init": "npm run init-db && npm run dev",
     "test": "node scripts/test-core.js",
     "docker:build": "docker build -t daily-message .",
+    "docker:build:dev": "docker build -f Dockerfile.dev -t daily-message:dev .",
     "docker:run": "docker run -p 3000:3000 -v ./data:/app/data daily-message",
-    "docker:compose": "docker-compose up -d"
+    "docker:compose": "docker-compose up -d",
+    "docker:compose:dev": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:compose:prod": "docker-compose -f docker-compose.prod.yml up -d",
+    "docker:down": "docker-compose down",
+    "docker:down:dev": "docker-compose -f docker-compose.dev.yml down",
+    "docker:down:prod": "docker-compose -f docker-compose.prod.yml down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker system prune -f && docker volume prune -f"
   },
   "dependencies": {
     "axios": "^1.7.9",

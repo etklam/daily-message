@@ -1,0 +1,32 @@
+FROM node:18-alpine
+
+# 安裝必要的系統依賴
+RUN apk add --no-cache libc6-compat curl
+
+WORKDIR /app
+
+# 複製 package files
+COPY package*.json ./
+
+# 安裝所有依賴（包括開發依賴）
+RUN npm ci
+
+# 複製應用程式碼
+COPY . .
+
+# 建立資料目錄
+RUN mkdir -p /app/data
+
+# 暴露端口
+EXPOSE 3000
+
+# 健康檢查
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/api/health || exit 1
+
+# 設置環境變數
+ENV NODE_ENV=development
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# 啟動開發服務器
+CMD ["npm", "run", "dev"]
