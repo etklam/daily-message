@@ -15,7 +15,7 @@
 ## 系統架構
 
 ### 技術堆疊
-- **前端**: Next.js 14, TypeScript, Tailwind CSS
+- **前端**: Next.js 15, TypeScript, Tailwind CSS
 - **後端**: Next.js API Routes, SQLite
 - **定時任務**: node-cron
 - **資料庫**: better-sqlite3
@@ -26,24 +26,31 @@
 daily-message/
 ├── src/
 │   ├── app/
-│   │   ├── api/config/          # 配置管理API
-│   │   ├── settings/ai/         # AI設定頁面
-│   │   └── settings/schedule/   # 定時任務管理頁面
+│   │   ├── api/
+│   │   │   ├── config/          # 配置管理API
+│   │   │   ├── logs/            # 日誌查詢API
+│   │   │   └── health/          # 健康檢查API
+│   │   ├── settings/
+│   │   │   ├── ai/              # AI設定頁面
+│   │   │   └── schedule/        # 定時任務管理頁面
+│   │   ├── globals.css          # 全域樣式
+│   │   ├── layout.tsx           # 佈局元件
+│   │   └── page.tsx             # 首頁
 │   ├── lib/
-│   │   ├── db.ts               # SQLite資料庫管理
-│   │   ├── config.ts           # 配置邏輯
-│   │   ├── openai.ts           # OpenAI API客戶端
-│   │   └── scheduler.ts        # 定時任務調度器
-│   └── components/
-│       └── settings/           # 設定頁面元件
+│   │   ├── db.ts                # SQLite資料庫管理
+│   │   ├── config.ts            # 配置邏輯
+│   │   ├── openai.ts            # OpenAI API客戶端
+│   │   ├── telegram.ts          # Telegram API客戶端
+│   │   └── scheduler.ts         # 定時任務調度器
+├── scripts/
+│   ├── init-db.js               # 資料庫初始化
+│   └── test-core.js             # 測試腳本
 ├── data/
-│   └── database.sqlite         # SQLite資料庫檔案
-├── docker/
-│   ├── Dockerfile
-│   └── docker-compose.yml
-└── scripts/
-    ├── init-db.js             # 資料庫初始化
-    └── test-scheduler.js      # 測試腳本
+│   └── database.sqlite          # SQLite資料庫檔案
+├── docker-compose.yml           # Docker Compose配置
+├── Dockerfile                   # Docker配置
+├── nginx.conf                   # Nginx配置
+└── .env.example                 # 環境變數範例
 ```
 
 ## 快速開始
@@ -172,6 +179,9 @@ Content-Type: application/json
 - `GET /api/logs` - 獲取執行日誌
 - `GET /api/logs/latest` - 獲取最新日誌
 
+### 健康檢查API
+- `GET /api/health` - 系統健康狀態檢查
+
 ## Web UI配置欄位詳細說明
 
 ### 可透過Web UI修改的欄位
@@ -237,34 +247,40 @@ npm run build        # 建置專案
 npm run start        # 啟動生產伺服器
 npm run init-db      # 初始化資料庫
 npm run test         # 執行測試
+npm run docker:build # 建置Docker映像
+npm run docker:run   # 運行Docker容器
+npm run docker:compose # 使用Docker Compose
 ```
 
 ### 專案開發計劃
 
-#### Phase 1: 基礎建置 (已完成)
+#### Phase 1: 基礎建置 ✅
 - ✅ 系統架構設計
 - ✅ 資料庫結構設計
 - ✅ 專案結構規劃
 - ✅ Web UI配置欄位設計
+- ✅ 依賴套件安裝
 
-#### Phase 2: 核心功能開發 (進行中)
-- 🔄 安裝必要套件
-- ⏳ SQLite配置管理模組
-- ⏳ AI設定頁面
-- ⏳ 定時任務管理頁面
-- ⏳ Telegram Bot配置頁面
-- ⏳ 配置管理API
+#### Phase 2: 核心功能開發 ✅
+- ✅ SQLite配置管理模組
+- ✅ AI設定頁面
+- ✅ 定時任務管理頁面
+- ✅ Telegram Bot配置頁面
+- ✅ 配置管理API
+- ✅ OpenAI API客戶端
+- ✅ Telegram Bot API發送模組
+- ✅ 定時任務調度器
 
-#### Phase 3: 功能整合
-- ⏳ OpenAI API客戶端
-- ⏳ Telegram Bot API發送模組
-- ⏳ 定時任務調度器
+#### Phase 3: 功能整合 ✅
+- ✅ API Routes建立
+- ✅ Web UI頁面
+- ✅ 測試腳本建立
 
-#### Phase 4: 部署準備
-- ⏳ Dockerfile和docker-compose
-- ⏳ 環境變數配置
-- ⏳ 整體功能測試
-- ⏳ 文件完善
+#### Phase 4: 部署準備 ✅
+- ✅ Dockerfile和docker-compose
+- ✅ 環境變數配置
+- ✅ 整體功能測試
+- ✅ 文件完善
 
 ## 故障排除
 
@@ -292,7 +308,7 @@ A: 確認cron表達式格式正確，時區設定符合預期
 ### 日誌查看
 ```bash
 # 查看應用程式日誌
-tail -f logs/app.log
+npm run dev
 
 # 查看資料庫內容
 sqlite3 data/database.sqlite

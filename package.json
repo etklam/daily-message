@@ -1,17 +1,27 @@
 {
   "name": "daily-message",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "定時向OpenAI API發送訊息並轉發到Telegram Bot的服務",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "init-db": "node scripts/init-db.js",
+    "dev:init": "npm run init-db && npm run dev",
+    "test": "node scripts/test-core.js",
+    "docker:build": "docker build -t daily-message .",
+    "docker:run": "docker run -p 3000:3000 -v ./data:/app/data daily-message",
+    "docker:compose": "docker-compose up -d"
   },
   "dependencies": {
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.4.2"
+    "next": "15.4.2",
+    "better-sqlite3": "^11.8.1",
+    "node-cron": "^3.0.3",
+    "axios": "^1.7.9"
   },
   "devDependencies": {
     "typescript": "^5",
@@ -19,6 +29,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node-cron": "^3.0.11"
   }
 }
