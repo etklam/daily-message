@@ -42,10 +42,6 @@ RUN chown -R nextjs:nodejs /app
 # 暴露端口
 EXPOSE 3000
 
-# 健康檢查
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
-
 # 切換到非 root 用戶
 USER nextjs
 
