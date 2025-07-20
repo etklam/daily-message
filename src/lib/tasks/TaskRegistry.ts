@@ -5,13 +5,19 @@ export class TaskRegistry {
   private static handlers: Map<string, TaskHandler> = new Map();
 
   // 註冊任務處理器
-  static register(handler: TaskHandler): void {
-    if (this.handlers.has(handler.taskType)) {
-      throw new Error(`任務類型 '${handler.taskType}' 已經註冊`);
+static register(handler: TaskHandler): void {
+  if (this.handlers.has(handler.taskType)) {
+    // 在開發環境中允許重複註冊相同類型的處理器
+    const existingHandler = this.handlers.get(handler.taskType);
+    if (existingHandler?.constructor === handler.constructor) {
+      // 遇到相同的處理器，靜默跳過避免錯誤
+      return;
     }
-    this.handlers.set(handler.taskType, handler);
-    console.log(`已註冊任務類型: ${handler.taskType} (${handler.name})`);
+    throw new Error(`任務類型 '${handler.taskType}' 已經註冊`);
   }
+  this.handlers.set(handler.taskType, handler);
+  console.log(`已註冊任務類型: ${handler.taskType} (${handler.name})`);
+}
 
   // 獲取任務處理器
   static getHandler(taskType: string): TaskHandler | undefined {
