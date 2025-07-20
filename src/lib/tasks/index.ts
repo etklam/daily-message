@@ -11,10 +11,17 @@ import { TaskRegistry } from './TaskRegistry';
 import { DailyMessageTask } from './handlers/DailyMessageTask';
 
 // 初始化任務註冊系統
+let initialized = false;
 export function initTaskSystem() {
   try {
+    if (initialized) return;
+    
     // 註冊所有任務處理器
-    TaskRegistry.register(new DailyMessageTask());
+    if (!TaskRegistry.isRegistered('daily_message')) {
+      TaskRegistry.register(new DailyMessageTask());
+    }
+    
+    initialized = true;
     
     console.log(`任務系統初始化完成，已註冊 ${TaskRegistry.getRegisteredCount()} 個任務類型:`);
     TaskRegistry.getRegisteredTaskTypes().forEach(taskType => {

@@ -8,12 +8,22 @@ import {
 } from '@/lib/db';
 import { validateTaskConfig, getAvailableTaskTypes, initTaskSystem } from '@/lib/tasks';
 
-// 初始化任務系統
-try {
-  initTaskSystem();
-} catch (error) {
-  console.error('任務系統初始化失敗:', error);
+let taskSystemInitialized = false;
+
+// 初始化任務系統（安全版本）
+function safeInitTaskSystem() {
+  if (taskSystemInitialized) return;
+  
+  try {
+    initTaskSystem();
+    taskSystemInitialized = true;
+  } catch (error) {
+    console.error('任務系統初始化失敗:', error);
+  }
 }
+
+// 在模組載入時執行一次安全初始化
+safeInitTaskSystem();
 
 // GET - 獲取所有排程任務
 export async function GET(request: NextRequest) {
