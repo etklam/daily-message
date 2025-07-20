@@ -20,10 +20,6 @@ RUN mkdir -p /app/data
 # 暴露端口
 EXPOSE 3000
 
-# 健康檢查
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
-
 # 設置環境變數
 ENV NODE_ENV=development
 ENV NEXT_TELEMETRY_DISABLED=1
