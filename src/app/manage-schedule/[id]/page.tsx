@@ -70,10 +70,11 @@ const CRON_PRESETS = [
 const TASK_CONFIG_TEMPLATES = {
   daily_message: {
     prompt: '請提供今日的一句話',
+    aiModel: 'gpt-3.5-turbo',
     messageTemplate: '{ai_response}'
   },
   weather_report: {
-    locations: ['香港', '日本'],
+    locations: ['台北', '台中', '高雄'],
     includeForcast: true,
     temperatureUnit: 'celsius'
   }
@@ -163,14 +164,14 @@ export default function TaskDetailPage() {
           description: '使用 AI 生成每日訊息並發送到 Telegram',
           handler_class: 'DailyMessageTask',
           is_enabled: true
+        },
+        {
+          id: 'weather_report',
+          name: '天氣報告',
+          description: '獲取天氣資訊並發送報告',
+          handler_class: 'WeatherReportTask',
+          is_enabled: true
         }
-        // {
-        //   id: 'weather_report',
-        //   name: '天氣報告',
-        //   description: '獲取天氣資訊並發送報告',
-        //   handler_class: 'WeatherReportTask',
-        //   is_enabled: true
-        // }
       ]);
     } catch (error) {
       console.error('載入任務類型失敗:', error);
